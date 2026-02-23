@@ -59,7 +59,9 @@ body {
 /* Adjust hero and title widths */
 .heroCard {
 	width: 70%; /* FIXME RM */
-	background-color: #fff;
+	background-image: url("./assets/hero.png");
+	background-size: 100%;
+	background-position: center;
 }
 
 .heroCard > img {
@@ -68,7 +70,7 @@ body {
 }
 
 .titleCard {
-	min-width: 25%;
+	min-width: 20%;
 	background-color: var(--color-fg);
 	flex-grow: 1; /* Fill remaining header space */
 	display: flex;
