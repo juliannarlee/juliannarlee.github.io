@@ -1,54 +1,54 @@
-const COLUMN_COUNT = 2;
+const COLUMN_COUNT = 3;
 const INDEX = [
-  "./assets/gallery/car.png",
-  "./assets/gallery/huh.png",
-  "./assets/gallery/linux.png",
-  "./assets/gallery/lpng.webp",
-  "./assets/gallery/rover-street1.jpg",
-  "",
-  "./assets/gallery/washanapple1.jpg"
+  "./assets/gallery/IMG_4628.JPG",
+  "./assets/gallery/IMG_3942.JPG",
+  "./assets/gallery/IMG_4693.JPG",
+  "./assets/gallery/IMG_4694.JPG",
+  "./assets/gallery/IMG_7244.jpeg",
+  "./assets/gallery/IMG_7224.jpeg",
+  "./assets/gallery/IMG_2642.JPG",
+  "./assets/gallery/IMG_6629.jpg",
+  "./assets/gallery/IMG_6630.jpg",
+  "./assets/gallery/IMG_6631.jpg",
 ];
 
-let galleryClickCallback = (e) => {
-  let card = e.target;
-  let anchor = card.parentNode;
-  let column = anchor.parentNode;
+let gallery, galleryHead, galleryHeadImg;
+let focusedElement;
 
-  if (location.href.includes("#" + anchor.id)) {
-    location.href = "";
-    // cleanup
+let galleryClickCallback = (e) => {
+  let img = e.target;
+
+  // FIXME a dedicated backbutton would be less of an antipattern
+  // and clean up the callback
+  if (img == galleryHeadImg) {
+   // Scroll the original back into view and hide the head
+    galleryHead.hidden = true;
+    focusedElement.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    focusedElement = null;
   } else {
-    location.href = "#" + anchor.id;
+    // Set te marker to jump back, then show the head and scroll
+    focusedElement = img;
+    galleryHead.hidden = false;
+    galleryHeadImg.src = img.src;
+    galleryHeadImg.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
   }
 }
 
 window.onload = () => {
-  let gallery = document.getElementById("mainGallery");
+  gallery = document.getElementById("mainGallery");
+  galleryHead = document.getElementById("galleryHead");
+  galleryHeadImg = document.getElementById("galleryHeadImg");
 
   for (let i = 0; i < COLUMN_COUNT; i++) {
-    gallery.innerHTML += "<div id=\"galleryCol" + i + "\" class=\"galleryColumn\"></div>";
+    gallery.innerHTML += "<div class=\"galleryColumn\"></div>";
   }
 
   let galleryColumns = Array.from(document.querySelectorAll("#mainGallery > .galleryColumn"));
 
   INDEX.forEach((src, i) => {
     let columnIndex = i % galleryColumns.length;
-    let id = "gallery" + i
-    galleryColumns[columnIndex].innerHTML += "<a id=\"" + id + "\"><img class=\"galleryCard\" src=\"" + src + "\"></a>";
+    galleryColumns[columnIndex].innerHTML += "<div class=\"galleryCard\"><img class=\"galleryImg\" src=\"" + src + "\"></div>";
   });
 
-  Array.from(document.querySelectorAll("a > .galleryCard")).forEach((target) => target.addEventListener("click", galleryClickCallback));
+  Array.from(document.querySelectorAll("img")).forEach((target) => target.addEventListener("click", galleryClickCallback));
 }
-
-/*
-  ~~- create columns in DOM~~
-
-  ~~- add to columns as <a id="id"><img src="link"></a>~~
-  
-  on click image/column
-	- resize gallery column to 100%
-	- scroll to image anchor id
-	- unhide blurb?
-	- if selected, unselect
-	- big transition forr col width css
-*/

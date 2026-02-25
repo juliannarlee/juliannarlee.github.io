@@ -65,7 +65,7 @@ body {
 .heroCard {
 	width: 70%; /* FIXME RM */
 	background-image: url("./assets/hero.png");
-	background-size: 100%;
+	background-size: cover;
 	background-position: center;
 }
 
@@ -94,18 +94,30 @@ body {
 	font-size: xx-large;	
 }
 
+#galleryHead {
+	width: 100%;
+}
+
+#galleryHeadImg {
+	max-width: 100%;
+	max-height: 75vh;
+	width: auto;
+	height: auto;
+}
+
 /* Gallery styles */
 .galleryContainer {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
+	flex-wrap: no-wrap;
 	justify-content: center;
+	margin: 0px;
 	padding: 0px;
 }
 
 .galleryColumn {
-	flex: 20%;
+	flex: 1%;
 	flex-direction: column;
 	justify-content: center;
 	align-content: top;
@@ -114,15 +126,23 @@ body {
 }
 
 .galleryCard {
-	width: calc(100% - 2 * var(--padding));
+	max-width: calc(100% - 2 * var(--padding));
+	max-height: 100vh;
 	filter: brightness(50%) grayscale(50%);
 	transition: filter .5s;
 	margin: var(--padding);
+	margin-bottom: calc(2 * var(--padding));
 	user-select: none;
+	overflow: none;
 }
 
 .galleryCard:hover {
 	filter: none;
+}
+
+.galleryImg {
+	max-width: 100%;
+	max-height: 100%;
 }
 
 a {
@@ -161,6 +181,9 @@ a {
 	}
 	.contentContainer {
 		width: 100%;
+	}
+	.headerContainer {
+		height: 15vh;
 	}
 	.heroCard {
 		width: 100%;
